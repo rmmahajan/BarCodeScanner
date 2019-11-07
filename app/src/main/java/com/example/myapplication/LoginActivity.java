@@ -93,16 +93,22 @@ public class LoginActivity extends AppCompatActivity {
 //                LocationGetter obj=new LocationGetter();
 //                obj.CheckPermission();
 //                obj.getLocation();
+                if(usr.equals("") || psd.equals(""))
+                {
+                    Toast.makeText(LoginActivity.this, "Fill the fields", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    String latitude = "30.7333";
+                    String longitude = "76.7794";
 
-                String latitude = "30.7333";
-                String longitude = "76.7794";
 
+                    new requestLogin(usr, psd, latitude, longitude, type).execute();
 
-                new requestLogin(usr, psd, latitude, longitude, type).execute();
-
-                Intent intent = new Intent(LoginActivity.this,BarCodeScanner.class);
-                startActivity(intent);
-                finish();
+                    Intent intent = new Intent(LoginActivity.this,BarCodeScanner.class);
+                    startActivity(intent);
+                    finish();
+                }
 
             }
         });

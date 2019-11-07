@@ -35,7 +35,6 @@ public Button button;
 public EditText user,pwd,eml;
 public RadioGroup rg;
 public RadioButton r1;
-public RelativeLayout relativeLayout;
 private EditText cms,cmpnm;
     String compname="0";
     String coms="0";
@@ -53,18 +52,8 @@ private EditText cms,cmpnm;
         button=findViewById(R.id.button);
         eml=findViewById(R.id.email);
         rg = findViewById(R.id.radiogrp);
-        relativeLayout = findViewById(R.id.rLayout1);
-
-        if(rg.getCheckedRadioButtonId() == -1)
-        {
-            Toast.makeText(this, "Fill the fields", Toast.LENGTH_SHORT).show();
-        }
-        else
-        {
-            int selectedId = rg.getCheckedRadioButtonId();
-            // find the radiobutton by returned id
-
-        }
+        cms = findViewById(R.id.comm);
+        cmpnm = findViewById(R.id.cname);
 
 
         rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
@@ -78,11 +67,11 @@ private EditText cms,cmpnm;
 
                 if(rbtn.equals("Carrier"))
                 {
-                    relativeLayout.setVisibility(View.VISIBLE);
+                    cms.setVisibility(View.VISIBLE);
+                    cmpnm.setVisibility(View.VISIBLE);
 
 
-                    cms = findViewById(R.id.comm);
-                    cmpnm = findViewById(R.id.cname);
+
 
                     compname = cmpnm.getText().toString();
                     coms = cms.getText().toString();
@@ -90,7 +79,8 @@ private EditText cms,cmpnm;
                 }
                 if(rbtn.equals("User"))
                 {
-                    relativeLayout.setVisibility(View.INVISIBLE);
+                    cms.setVisibility(View.GONE);
+                    cmpnm.setVisibility(View.GONE);
                     compname = "0";
                     coms = "0";
                 }
@@ -106,14 +96,31 @@ private EditText cms,cmpnm;
         String usr = user.getText().toString();
         String psd = pwd.getText().toString();
         String email = eml.getText().toString();
-        cms = findViewById(R.id.comm);
-        cmpnm = findViewById(R.id.cname);
 
-        compname = cmpnm.getText().toString();
-        coms = cms.getText().toString();
-        //Toast.makeText(MainActivity.this, compname+"***********"+coms, Toast.LENGTH_SHORT).show();
+        if(usr.equals("") || psd.equals("") || email.equals(""))
+        {
+            Toast.makeText(MainActivity.this, "Fill the fields", Toast.LENGTH_SHORT).show();
+        }
+        else {
 
-        new request(usr,psd,email, coms,compname).execute();
+
+            cms = findViewById(R.id.comm);
+            cmpnm = findViewById(R.id.cname);
+
+            compname = cmpnm.getText().toString();
+            coms = cms.getText().toString();
+
+            if(compname.equals("") || coms.equals(""))
+            {
+                Toast.makeText(MainActivity.this, "Fill the fields", Toast.LENGTH_SHORT).show();
+            }
+            else
+            {
+                //Toast.makeText(MainActivity.this, compname+"***********"+coms, Toast.LENGTH_SHORT).show();
+
+                new request(usr, psd, email, coms, compname).execute();
+            }
+        }
     }
 });
         }
